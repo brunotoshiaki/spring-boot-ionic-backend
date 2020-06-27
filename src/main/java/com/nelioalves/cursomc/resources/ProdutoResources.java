@@ -16,6 +16,8 @@ import com.nelioalves.cursomc.dto.ProdutoDTO;
 import com.nelioalves.cursomc.resources.utils.URL;
 import com.nelioalves.cursomc.services.ProdutoService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/produtos")
 public class ProdutoResources {
@@ -23,12 +25,14 @@ public class ProdutoResources {
 	@Autowired
 	private ProdutoService service;
 
+	@ApiOperation(value="Busca por id")
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Produto> listar(@PathVariable Integer id) {
 		Produto obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 
+	@ApiOperation(value="Retorna todos os produtos com paginação")
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<Page<ProdutoDTO>> findPage(@RequestParam(value = "nome", defaultValue = "") String nome,
 			@RequestParam(value = "categorias", defaultValue = "") String categorias,
